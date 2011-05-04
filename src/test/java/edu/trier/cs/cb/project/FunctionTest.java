@@ -3,6 +3,7 @@ package edu.trier.cs.cb.project;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class FunctionTest {
@@ -30,6 +31,7 @@ public class FunctionTest {
 		AbstractMachine m = new AbstractMachine();
 		m.execute(Instruction.program1);
 		m.printStack();
+		Assert.assertEquals(15, (int)m.peek());
 	}
 	
 	@Test
@@ -37,6 +39,7 @@ public class FunctionTest {
 		AbstractMachine m = new AbstractMachine();
 		m.execute(Instruction.program2);
 		m.printStack();
+		Assert.assertEquals(28, (int)m.peek(1));
 	}
 
 	@Test
@@ -45,6 +48,7 @@ public class FunctionTest {
 		m.reserveSpace(1);
 		m.execute(Instruction.program3);
 		m.printStack();
+		Assert.assertEquals(200, (int)m.peek(-1));
 	}
 
 	@Test
@@ -53,6 +57,7 @@ public class FunctionTest {
 		m.reserveSpace(1);
 		m.execute(Instruction.program4);
 		m.printStack();
+		Assert.assertEquals(100, (int)m.get(0));
 	}
 
 	@Test
@@ -60,5 +65,6 @@ public class FunctionTest {
 		AbstractMachine m = new AbstractMachine();
 		m.execute(Instruction.factorial);
 		m.printStack();
+		Assert.assertEquals(6, (int)m.get(0));
 	}
 }

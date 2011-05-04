@@ -16,7 +16,7 @@ public class Return extends AbstractOpcode implements Opcode {
 		int fp = machine.get(machine.getFP()+1);
 		int pc = machine.get(machine.getFP()+4);
 		
-		machine.setTOP(top);
+		machine.setTOP(top-1);
 		machine.setPP(pp);
 		machine.setFP(fp);
 		machine.setPC(pc);

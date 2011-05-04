@@ -27,6 +27,11 @@ import edu.trier.cs.cb.project.opcodes.Return;
 import edu.trier.cs.cb.project.opcodes.Store;
 import edu.trier.cs.cb.project.opcodes.Sub;
 
+/**
+ * The abstract machine.
+ * 
+ * @author Stefan Ollinger
+ */
 public class AbstractMachine {
 
 	public interface Listener {
@@ -104,13 +109,6 @@ public class AbstractMachine {
 			for (Listener l : listeners) l.onBeforeExecuting(i);
 			
 			op.touch(i);
-			
-//			try {
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 			
 			for (Listener l : listeners) l.onAfterExecuting();
 		}
