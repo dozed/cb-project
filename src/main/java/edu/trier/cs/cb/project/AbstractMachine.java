@@ -1,5 +1,6 @@
 package edu.trier.cs.cb.project;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,13 @@ import edu.trier.cs.cb.project.opcodes.Sub;
 
 public class AbstractMachine {
 
+	public interface Listener {
+		public void onBeforeExecuting(Instruction i);
+		public void onAfterExecuting();
+	}
+	
+	private List<Listener> listeners = new ArrayList<AbstractMachine.Listener>();
+	
 	/**
 	 * The stack.
 	 */
@@ -93,7 +101,18 @@ public class AbstractMachine {
 			Instruction i = instructions.get(PC);
 			Opcode op = operators.get(i.getOpcode());
 			// System.out.println("TOP: " + TOP + " PP: " + PP + " FP: " + FP);
+			for (Listener l : listeners) l.onBeforeExecuting(i);
+			
 			op.touch(i);
+			
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
+			for (Listener l : listeners) l.onAfterExecuting();
 		}
 	}
 
@@ -102,6 +121,10 @@ public class AbstractMachine {
 		execute(ins);
 	}
 
+	public void addListener(Listener l) {
+		this.listeners.add(l);
+	}
+	
 	/**
 	 * This method can be used to create space for local variables before
 	 * executing a instruction set.
@@ -154,6 +177,10 @@ public class AbstractMachine {
 		this.TOP = top;
 	}
 
+	public Stack<Integer> getStack() {
+		return STACK;
+	}
+	
 	public void push(Integer e) {
 		TOP++;
 		if (STACK.size() <= TOP + 1) {

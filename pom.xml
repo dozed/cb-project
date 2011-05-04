@@ -29,5 +29,12 @@
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>org.eclipse.swt.gtk.linux</groupId>
+  		<artifactId>x86</artifactId>
+  		<version>3.3.0-v3346</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
   </dependencies>
 </project>

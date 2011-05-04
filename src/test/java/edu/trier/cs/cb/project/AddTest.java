@@ -10,7 +10,9 @@ public class AddTest {
 	@Test
 	public void simpleAdd() {
 		List<Instruction> instr = Arrays.asList(new Instruction[] {
-			new Instruction(Instruction.ADD, 1, 2),
+			new Instruction(Instruction.CONST, 1),
+			new Instruction(Instruction.CONST, 2),
+			new Instruction(Instruction.ADD),
 			new Instruction(Instruction.HALT),
 		});
 		

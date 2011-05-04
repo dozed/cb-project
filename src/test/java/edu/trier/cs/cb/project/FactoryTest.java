@@ -7,11 +7,11 @@ import edu.trier.cs.cb.project.opcodes.Opcode;
 
 public class FactoryTest {
 
+	@SuppressWarnings("unused")
 	@Test
 	public void test() {
 		AbstractMachine m = new AbstractMachine();
 		Add a = Opcode.Factory.get(Add.class, m);
-		a.touch(new Instruction(Instruction.ADD, 1, 2));
 	}
 	
 }

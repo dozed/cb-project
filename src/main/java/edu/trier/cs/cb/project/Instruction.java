@@ -116,13 +116,13 @@ public class Instruction {
 			retStr += "ERROR";
 		}
 
-		if (arg1 != Integer.MIN_VALUE) {
+		if (arg1 != null) {
 			retStr += " " + arg1;
 
-			if (arg2 != Integer.MIN_VALUE) {
+			if (arg2 != null) {
 				retStr += " " + arg2;
 
-				if (arg3 != Integer.MIN_VALUE) {
+				if (arg3 != null) {
 					retStr += " " + arg3;
 				}
 			}
