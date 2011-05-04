@@ -23,6 +23,8 @@ public class Instruction {
 	public final static int NOP = 13;
 	public final static int IFLT = 14;
 	public final static int IFGT = 15;
+	public final static int IFEQ = 16;
+	public final static int IFNEQ = 17;
 	public final static int HALT = 100;
 
 	public Instruction(int op, int a1, int a2, int a3) {

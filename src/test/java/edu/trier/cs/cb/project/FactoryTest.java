@@ -11,7 +11,7 @@ public class FactoryTest {
 	public void test() {
 		AbstractMachine m = new AbstractMachine();
 		Add a = Opcode.Factory.get(Add.class, m);
-		a.touch(null);
+		a.touch(new Instruction(Instruction.ADD, 1, 2));
 	}
 	
 }
