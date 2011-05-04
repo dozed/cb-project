@@ -3,9 +3,9 @@ package edu.trier.cs.cb.project.opcodes;
 import edu.trier.cs.cb.project.Instruction;
 
 
-public class Iflt extends AbstractOpcode implements Opcode {
+public class IfLt extends AbstractOpcode implements Opcode {
 
-	Iflt() {}
+	IfLt() {}
 	
 	public void touch(Instruction i) {
 		int a = machine.pop();

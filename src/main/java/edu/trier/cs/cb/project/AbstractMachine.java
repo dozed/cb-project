@@ -1,5 +1,6 @@
 package edu.trier.cs.cb.project;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,14 +9,19 @@ import java.util.Stack;
 import edu.trier.cs.cb.project.opcodes.Add;
 import edu.trier.cs.cb.project.opcodes.Const;
 import edu.trier.cs.cb.project.opcodes.Div;
+import edu.trier.cs.cb.project.opcodes.Goto;
 import edu.trier.cs.cb.project.opcodes.Halt;
-import edu.trier.cs.cb.project.opcodes.Ifeq;
-import edu.trier.cs.cb.project.opcodes.Ifgt;
-import edu.trier.cs.cb.project.opcodes.Iflt;
-import edu.trier.cs.cb.project.opcodes.Ifneq;
+import edu.trier.cs.cb.project.opcodes.IfEq;
+import edu.trier.cs.cb.project.opcodes.IfGt;
+import edu.trier.cs.cb.project.opcodes.IfLt;
+import edu.trier.cs.cb.project.opcodes.IfNeq;
+import edu.trier.cs.cb.project.opcodes.IfNotZero;
+import edu.trier.cs.cb.project.opcodes.IfZero;
+import edu.trier.cs.cb.project.opcodes.Invoke;
 import edu.trier.cs.cb.project.opcodes.Load;
 import edu.trier.cs.cb.project.opcodes.Mult;
 import edu.trier.cs.cb.project.opcodes.Opcode;
+import edu.trier.cs.cb.project.opcodes.Return;
 import edu.trier.cs.cb.project.opcodes.Store;
 import edu.trier.cs.cb.project.opcodes.Sub;
 
@@ -60,10 +66,15 @@ public class AbstractMachine {
 		operators.put(Instruction.SUB, Opcode.Factory.get(Sub.class, this));
 		operators.put(Instruction.MULT, Opcode.Factory.get(Mult.class, this));
 		operators.put(Instruction.DIV, Opcode.Factory.get(Div.class, this));
-		operators.put(Instruction.IFLT, Opcode.Factory.get(Iflt.class, this));
-		operators.put(Instruction.IFGT, Opcode.Factory.get(Ifgt.class, this));
-		operators.put(Instruction.IFEQ, Opcode.Factory.get(Ifeq.class, this));
-		operators.put(Instruction.IFNEQ, Opcode.Factory.get(Ifneq.class, this));
+		operators.put(Instruction.IFLT, Opcode.Factory.get(IfLt.class, this));
+		operators.put(Instruction.IFGT, Opcode.Factory.get(IfGt.class, this));
+		operators.put(Instruction.IFEQ, Opcode.Factory.get(IfEq.class, this));
+		operators.put(Instruction.IFNEQ, Opcode.Factory.get(IfNeq.class, this));
+		operators.put(Instruction.GOTO, Opcode.Factory.get(Goto.class, this));
+		operators.put(Instruction.IFZERO, Opcode.Factory.get(IfZero.class, this));
+		operators.put(Instruction.IFNZERO, Opcode.Factory.get(IfNotZero.class, this));
+		operators.put(Instruction.INVOKE, Opcode.Factory.get(Invoke.class, this));
+		operators.put(Instruction.RETURN, Opcode.Factory.get(Return.class, this));
 		operators.put(Instruction.HALT, Opcode.Factory.get(Halt.class, this));
 	}
 	
@@ -76,8 +87,14 @@ public class AbstractMachine {
 		while (PC >= 0) {
 			Instruction i = instructions.get(PC);
 			Opcode op = operators.get(i.getOpcode());
+			//System.out.println("TOP: " + TOP + " PP: " + PP + " FP: " + FP);
 			op.touch(i);
 		}
+	}
+	
+	public void execute(Instruction[] instructions) {
+		List<Instruction> ins = Arrays.asList(instructions);
+		execute(ins);
 	}
 	
 	public void printStack() {
@@ -113,11 +130,19 @@ public class AbstractMachine {
 	public void setFP(Integer fP) {
 		FP = fP;
 	}
+	
+	public Integer getTOP() {
+		return TOP;
+	}
+	
+	public void setTOP(Integer top) {
+		this.TOP = top;
+	}
 
 	public void push(Integer e) {
 		TOP++;
 		if (STACK.size() <= TOP+1) {
-			STACK.setSize((TOP+1)*2);
+			STACK.setSize((TOP+2));
 		}
 		STACK.set(TOP, e);
 	}
@@ -129,19 +154,46 @@ public class AbstractMachine {
 	}
 
 	public Integer peek() {
-		return STACK.get(TOP);
+		return peek(0);
 	}
 
-	public Integer peek(int p) {
+	public Integer peek(int k) {
+		return STACK.get(TOP+k);
+	}
+
+	public Integer get(int p) {
 		return STACK.get(p);
 	}
 
-	public void pushArg(int index, Integer e) {
-		int realIndex = PP + index;
-		if (STACK.size() <= realIndex) {
-			STACK.setSize(realIndex+1);
+	public void set(int index, Integer e) {
+		if (STACK.size() <= index) {
+			STACK.setSize(index+1);
 		}
-		STACK.set(realIndex, e);
+		STACK.set(index, e);
+	}	
+	
+	public Integer spp(int d) {
+		return spp(d, PP, FP);
+	}
+	
+	private Integer spp(int d, int pp, int fp) {
+		if (d == 0) {
+			return pp;
+		} else {
+			return spp(d - 1, get(fp + 2), get(fp + 3));
+		}
+	}
+
+	public Integer sfp(int d) {
+		return sfp(d, FP);
+	}
+
+	private Integer sfp(int d, int fp) {
+		if (d == 0) {
+			return fp;
+		} else {
+			return sfp(d - 1, get(fp + 3));
+		}
 	}
 
 }

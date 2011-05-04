@@ -8,10 +8,26 @@ public class Store extends AbstractOpcode implements Opcode {
 	Store() {}
 	
 	public void touch(Instruction i) {
-		int k = i.getArg1();
+		Integer k = i.getArg1();
+		Integer d = i.getArg2();
+		if (d == null) {
+			localStore(k);
+		} else {
+			remoteStore(k, d);
+		}
+	}
+	
+	private void localStore(int k) {
+		Integer v = machine.pop();
+		log.debug("storing " + k + "th argument with: " + v);
+		machine.set(machine.getPP()+k, v);
+		machine.incPC();
+	}
+	
+	private void remoteStore(int k, int d) {
 		int v = machine.pop();
 		log.debug("storing " + k + "th argument with: " + v);
-		machine.pushArg(k, v);
+		machine.set(machine.spp(d)+k, v);
 		machine.incPC();
 	}
 

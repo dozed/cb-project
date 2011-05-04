@@ -9,6 +9,7 @@ public class Goto extends AbstractOpcode implements Opcode {
 	
 	public void touch(Instruction i) {
 		int p = i.getArg1();
+		log.debug("goto: " + p);
 		machine.setPC(p);
 	}
 

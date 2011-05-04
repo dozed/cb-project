@@ -4,9 +4,9 @@ package edu.trier.cs.cb.project;
 
 public class Instruction {
 	private int opcode;
-	private int arg1;
-	private int arg2;
-	private int arg3;
+	private Integer arg1 = null;
+	private Integer arg2 = null;
+	private Integer arg3 = null;
 
 	public final static int INVOKE = 1;
 	public final static int RETURN = 2;
@@ -44,41 +44,25 @@ public class Instruction {
 
 	public Instruction(int op) {
 		opcode = op;
-		arg1 = Integer.MIN_VALUE;
-		arg2 = Integer.MIN_VALUE;
-		arg3 = Integer.MIN_VALUE;
+		arg1 = null;
+		arg2 = null;
+		arg3 = null;
 	}
 
-	public int getArg1() {
+	public Integer getArg1() {
 		return arg1;
 	}
 
-	public void setArg1(int arg1) {
-		this.arg1 = arg1;
-	}
-
-	public int getArg2() {
+	public Integer getArg2() {
 		return arg2;
 	}
 
-	public void setArg2(int arg2) {
-		this.arg2 = arg2;
-	}
-
-	public int getArg3() {
+	public Integer getArg3() {
 		return arg3;
-	}
-
-	public void setArg3(int arg3) {
-		this.arg3 = arg3;
 	}
 
 	public int getOpcode() {
 		return opcode;
-	}
-
-	public void setOpcode(int opcode) {
-		this.opcode = opcode;
 	}
 
 	@Override

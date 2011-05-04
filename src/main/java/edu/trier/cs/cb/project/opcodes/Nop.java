@@ -3,12 +3,13 @@ package edu.trier.cs.cb.project.opcodes;
 import edu.trier.cs.cb.project.Instruction;
 
 
-public class Halt extends AbstractOpcode implements Opcode {
+public class Nop extends AbstractOpcode implements Opcode {
 
-	Halt() {}
+	Nop() {}
 	
 	public void touch(Instruction i) {
-		machine.setPC(-1);
+		log.debug("nop");
+		machine.incPC();
 	}
 
 }

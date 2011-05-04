@@ -37,6 +37,28 @@ public class SimpleTest {
 	}
 	
 	@Test
+	public void simpleTest2() {
+		List<Instruction> instr = Arrays.asList(new Instruction[] {
+			new Instruction(Instruction.CONST, 6), // value for x
+			new Instruction(Instruction.STORE, 0, 0), // store x
+			new Instruction(Instruction.LOAD, 0, 0),
+			new Instruction(Instruction.CONST, 3),
+			new Instruction(Instruction.MULT),
+			new Instruction(Instruction.CONST, 5),
+			new Instruction(Instruction.CONST, 2),
+			new Instruction(Instruction.MULT),
+			new Instruction(Instruction.ADD),
+			new Instruction(Instruction.STORE, 1, 0),
+			new Instruction(Instruction.HALT)
+		});
+		
+		AbstractMachine m = new AbstractMachine();
+		m.execute(instr);
+		
+		m.printStack();
+	}
+	
+	@Test
 	public void ppTest() {
 		List<Instruction> instr = Arrays.asList(new Instruction[] {
 			new Instruction(Instruction.CONST, 10),	// x

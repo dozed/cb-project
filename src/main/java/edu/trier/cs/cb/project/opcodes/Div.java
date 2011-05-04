@@ -8,8 +8,8 @@ public class Div extends AbstractOpcode implements Opcode {
 	Div() {}
 	
 	public void touch(Instruction i) {
-		int a = machine.pop();
 		int b = machine.pop();
+		int a = machine.pop();
 		int c = a / b;
 		log.debug("dividing: " + a + " / " + b + " = " + c);
 		machine.push(c);
