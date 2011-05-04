@@ -53,6 +53,7 @@ public class SimpleTest {
 		});
 		
 		AbstractMachine m = new AbstractMachine();
+
 		m.execute(instr);
 		
 		m.printStack();

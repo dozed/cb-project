@@ -20,6 +20,7 @@ import edu.trier.cs.cb.project.opcodes.IfZero;
 import edu.trier.cs.cb.project.opcodes.Invoke;
 import edu.trier.cs.cb.project.opcodes.Load;
 import edu.trier.cs.cb.project.opcodes.Mult;
+import edu.trier.cs.cb.project.opcodes.Nop;
 import edu.trier.cs.cb.project.opcodes.Opcode;
 import edu.trier.cs.cb.project.opcodes.Return;
 import edu.trier.cs.cb.project.opcodes.Store;
@@ -31,25 +32,26 @@ public class AbstractMachine {
 	 * The stack.
 	 */
 	private Stack<Integer> STACK = new Stack<Integer>();
-	
+
 	/**
-	 * Points to the head of the stack.
-	 * TODO This variable is managed by the machine.
+	 * Points to the head of the stack. TODO This variable is managed by the
+	 * machine.
 	 */
 	private Integer TOP = new Integer(-1);
-	
+
 	/**
 	 * Parameter pointer: points to the first argument.
 	 */
 	private Integer PP = new Integer(0);
-	
+
 	/**
 	 * Frame pointer: points to the start of the current frame.
 	 */
 	private Integer FP = new Integer(0);
-	
+
 	/**
-	 * Program Counter: points to the instruction which is next in queue for execution. 
+	 * Program Counter: points to the instruction which is next in queue for
+	 * execution.
 	 */
 	private Integer PC = new Integer(0);
 
@@ -57,7 +59,7 @@ public class AbstractMachine {
 	 * Holds the handlers for the operators.
 	 */
 	private Map<Integer, Opcode> operators = new HashMap<Integer, Opcode>();
-	
+
 	public AbstractMachine() {
 		operators.put(Instruction.CONST, Opcode.Factory.get(Const.class, this));
 		operators.put(Instruction.STORE, Opcode.Factory.get(Store.class, this));
@@ -75,34 +77,47 @@ public class AbstractMachine {
 		operators.put(Instruction.IFNZERO, Opcode.Factory.get(IfNotZero.class, this));
 		operators.put(Instruction.INVOKE, Opcode.Factory.get(Invoke.class, this));
 		operators.put(Instruction.RETURN, Opcode.Factory.get(Return.class, this));
+		operators.put(Instruction.NOP, Opcode.Factory.get(Nop.class, this));
 		operators.put(Instruction.HALT, Opcode.Factory.get(Halt.class, this));
 	}
-	
+
 	/**
 	 * Executes a bunch of instructions.
-	 * @param instructions The memory containing the instructions to be executed.
+	 * 
+	 * @param instructions
+	 *            The memory containing the instructions to be executed.
 	 */
 	public synchronized void execute(List<Instruction> instructions) {
 		PC = 0;
 		while (PC >= 0) {
 			Instruction i = instructions.get(PC);
 			Opcode op = operators.get(i.getOpcode());
-			//System.out.println("TOP: " + TOP + " PP: " + PP + " FP: " + FP);
+			// System.out.println("TOP: " + TOP + " PP: " + PP + " FP: " + FP);
 			op.touch(i);
 		}
 	}
-	
+
 	public void execute(Instruction[] instructions) {
 		List<Instruction> ins = Arrays.asList(instructions);
 		execute(ins);
 	}
-	
+
+	/**
+	 * This method can be used to create space for local variables before
+	 * executing a instruction set.
+	 * 
+	 * @param n
+	 */
+	public void reserveSpace(int n) {
+		TOP += n;
+	}
+
 	public void printStack() {
-		for (int i=0; i < STACK.size(); i++) {
-			System.out.println(i+": "+STACK.get(i));
+		for (int i = 0; i < STACK.size(); i++) {
+			System.out.println(i + ": " + STACK.get(i));
 		}
 	}
-	
+
 	public void incPC() {
 		PC++;
 	}
@@ -130,23 +145,23 @@ public class AbstractMachine {
 	public void setFP(Integer fP) {
 		FP = fP;
 	}
-	
+
 	public Integer getTOP() {
 		return TOP;
 	}
-	
+
 	public void setTOP(Integer top) {
 		this.TOP = top;
 	}
 
 	public void push(Integer e) {
 		TOP++;
-		if (STACK.size() <= TOP+1) {
-			STACK.setSize((TOP+2));
+		if (STACK.size() <= TOP + 1) {
+			STACK.setSize((TOP + 2));
 		}
 		STACK.set(TOP, e);
 	}
-	
+
 	public Integer pop() {
 		int e = STACK.get(TOP);
 		TOP--;
@@ -158,7 +173,7 @@ public class AbstractMachine {
 	}
 
 	public Integer peek(int k) {
-		return STACK.get(TOP+k);
+		return STACK.get(TOP + k);
 	}
 
 	public Integer get(int p) {
@@ -167,15 +182,15 @@ public class AbstractMachine {
 
 	public void set(int index, Integer e) {
 		if (STACK.size() <= index) {
-			STACK.setSize(index+1);
+			STACK.setSize(index + 1);
 		}
 		STACK.set(index, e);
-	}	
-	
+	}
+
 	public Integer spp(int d) {
 		return spp(d, PP, FP);
 	}
-	
+
 	private Integer spp(int d, int pp, int fp) {
 		if (d == 0) {
 			return pp;
