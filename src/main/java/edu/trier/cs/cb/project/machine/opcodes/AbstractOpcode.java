@@ -1,9 +1,9 @@
-package edu.trier.cs.cb.project.opcodes;
+package edu.trier.cs.cb.project.machine.opcodes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.trier.cs.cb.project.AbstractMachine;
+import edu.trier.cs.cb.project.machine.AbstractMachine;
 
 public abstract class AbstractOpcode implements Opcode {
 

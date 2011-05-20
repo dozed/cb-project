@@ -1,10 +1,13 @@
-package edu.trier.cs.cb.project;
+package edu.trier.cs.cb.project.machine;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import edu.trier.cs.cb.project.machine.AbstractMachine;
+import edu.trier.cs.cb.project.machine.Instruction;
 
 public class FunctionTest {
 

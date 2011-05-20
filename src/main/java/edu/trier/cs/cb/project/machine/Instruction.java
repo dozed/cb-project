@@ -1,4 +1,4 @@
-package edu.trier.cs.cb.project;
+package edu.trier.cs.cb.project.machine;
 
 /* Instructions for TRIPLA 2011 */
 

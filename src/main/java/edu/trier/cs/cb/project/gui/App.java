@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import edu.trier.cs.cb.project.AbstractMachine;
-import edu.trier.cs.cb.project.Instruction;
+import edu.trier.cs.cb.project.machine.AbstractMachine;
+import edu.trier.cs.cb.project.machine.Instruction;
 
 public class App implements AbstractMachine.Listener {
 

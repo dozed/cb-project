@@ -1,6 +1,6 @@
-package edu.trier.cs.cb.project.opcodes;
+package edu.trier.cs.cb.project.machine.opcodes;
 
-import edu.trier.cs.cb.project.Instruction;
+import edu.trier.cs.cb.project.machine.Instruction;
 
 
 public class Sub extends AbstractOpcode implements Opcode {

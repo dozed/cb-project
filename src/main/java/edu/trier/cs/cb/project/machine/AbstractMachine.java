@@ -1,4 +1,4 @@
-package edu.trier.cs.cb.project;
+package edu.trier.cs.cb.project.machine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,25 +7,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import edu.trier.cs.cb.project.opcodes.Add;
-import edu.trier.cs.cb.project.opcodes.Const;
-import edu.trier.cs.cb.project.opcodes.Div;
-import edu.trier.cs.cb.project.opcodes.Goto;
-import edu.trier.cs.cb.project.opcodes.Halt;
-import edu.trier.cs.cb.project.opcodes.IfEq;
-import edu.trier.cs.cb.project.opcodes.IfGt;
-import edu.trier.cs.cb.project.opcodes.IfLt;
-import edu.trier.cs.cb.project.opcodes.IfNeq;
-import edu.trier.cs.cb.project.opcodes.IfNotZero;
-import edu.trier.cs.cb.project.opcodes.IfZero;
-import edu.trier.cs.cb.project.opcodes.Invoke;
-import edu.trier.cs.cb.project.opcodes.Load;
-import edu.trier.cs.cb.project.opcodes.Mult;
-import edu.trier.cs.cb.project.opcodes.Nop;
-import edu.trier.cs.cb.project.opcodes.Opcode;
-import edu.trier.cs.cb.project.opcodes.Return;
-import edu.trier.cs.cb.project.opcodes.Store;
-import edu.trier.cs.cb.project.opcodes.Sub;
+import edu.trier.cs.cb.project.machine.opcodes.Add;
+import edu.trier.cs.cb.project.machine.opcodes.Const;
+import edu.trier.cs.cb.project.machine.opcodes.Div;
+import edu.trier.cs.cb.project.machine.opcodes.Goto;
+import edu.trier.cs.cb.project.machine.opcodes.Halt;
+import edu.trier.cs.cb.project.machine.opcodes.IfEq;
+import edu.trier.cs.cb.project.machine.opcodes.IfGt;
+import edu.trier.cs.cb.project.machine.opcodes.IfLt;
+import edu.trier.cs.cb.project.machine.opcodes.IfNeq;
+import edu.trier.cs.cb.project.machine.opcodes.IfNotZero;
+import edu.trier.cs.cb.project.machine.opcodes.IfZero;
+import edu.trier.cs.cb.project.machine.opcodes.Invoke;
+import edu.trier.cs.cb.project.machine.opcodes.Load;
+import edu.trier.cs.cb.project.machine.opcodes.Mult;
+import edu.trier.cs.cb.project.machine.opcodes.Nop;
+import edu.trier.cs.cb.project.machine.opcodes.Opcode;
+import edu.trier.cs.cb.project.machine.opcodes.Return;
+import edu.trier.cs.cb.project.machine.opcodes.Store;
+import edu.trier.cs.cb.project.machine.opcodes.Sub;
 
 /**
  * The abstract machine.

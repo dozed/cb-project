@@ -1,9 +1,10 @@
-package edu.trier.cs.cb.project;
+package edu.trier.cs.cb.project.machine;
 
 import org.junit.Test;
 
-import edu.trier.cs.cb.project.opcodes.Add;
-import edu.trier.cs.cb.project.opcodes.Opcode;
+import edu.trier.cs.cb.project.machine.AbstractMachine;
+import edu.trier.cs.cb.project.machine.opcodes.Add;
+import edu.trier.cs.cb.project.machine.opcodes.Opcode;
 
 public class FactoryTest {
 
