@@ -17,7 +17,8 @@ public class ParserTest {
 		TRIPLALexer lexer = new TRIPLALexer(charStream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		TRIPLAParser parser = new TRIPLAParser(tokenStream );
-		parser.let();
+		ASTNode node = parser.let();
+		node.dump();
 	}
 	
 }
