@@ -125,7 +125,7 @@ public class AbstractMachine {
 	
 	/**
 	 * This method can be used to create space for local variables before
-	 * executing a instruction set.
+	 * executing an instruction set.
 	 * 
 	 * @param n
 	 */

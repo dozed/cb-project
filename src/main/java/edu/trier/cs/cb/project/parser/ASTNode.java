@@ -7,7 +7,7 @@ public class ASTNode implements IASTNode {
 
 	private String type;
 	
-	private List<ASTNode> children = new ArrayList<ASTNode>();
+	private List<IASTNode> children = new ArrayList<IASTNode>();
 	
 	public ASTNode() {
 		
@@ -21,24 +21,25 @@ public class ASTNode implements IASTNode {
 		return type;
 	}
 	
-	public void addChild(ASTNode node) {
+	public void addChild(IASTNode node) {
 		children.add(node);
 	}
 
-	public List<ASTNode> getChildren() {
+	public List<IASTNode> getChildren() {
 		return children;
 	}
-	
+
+	@Override
 	public void dump() {
-		dump(this, 0);
+		// TODO Auto-generated method stub
+		
 	}
-	
-	private void dump(ASTNode node, int level) {
-		for (int i=0; i < level; i++) System.out.print("-");
-		System.out.println(node.getType());
-		for (ASTNode child : node.getChildren()) {
-			dump(child, level+1);
-		}
+
+	@Override
+	public void dump(int i) {
+		// TODO Auto-generated method stub
+		
 	}
+
 	
 }

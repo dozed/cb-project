@@ -12,57 +12,57 @@ options {
   package edu.trier.cs.cb.project.parser;
 }
 
-let returns [ASTNode result]
-  :   'let' definitions 'in' expressions  { $result = new ASTNode("let"); $result.addChild($definitions.result); $result.addChild($definitions.result); }
+let
+  :   'let' definitions 'in' expressions
   ;
 
-definitions returns [ASTNode result]
-  :   definition definitions*  { $result = new ASTNode("definitions"); }
+definitions
+  :   definition definitions*
   ;
 
-definition returns [ASTNode result]
-  :   ID '(' variables ')' '{' expressions '}'  { $result = new ASTNode("definition"); }
+definition
+  :   ID '(' variables ')' '{' expressions '}'
   ;
 
-variables returns [ASTNode result]
-  :   ID (',' ID)*  { $result = new ASTNode("variables"); }
+variables
+  :   ID (',' ID)*
   ;
 
-expressions returns [ASTNode result]
-  :   expression (';' expression)*  { $result = new ASTNode("expressions"); }
+expressions
+  :   expression (';' expression)*
   ;
 
-expression returns [ASTNode result]
-  :   relation  { $result = new ASTNode("const"); }
-  |   assignment  { $result = new ASTNode("const"); }
-  |   'if' expression 'then' expressions 'else' expressions  { $result = new ASTNode("expression"); }
+expression
+  :   relation
+  |   assignment
+  |   'if' expression 'then' expressions 'else' expressions
   ;
 
-assignment returns [ASTNode result]
-  :   ID '=' expression  { $result = new ASTNode("assignment"); }
+assignment
+  :   ID '=' expression
   ;
 
-term returns [ASTNode result]
-  :   ID        { $result = new ASTNode("id"); }
-  |   CONST     { $result = new ASTNode("const"); }
-  |   ID '(' arguments ')'  { $result = new ASTNode("function call"); } 
-  |   '(' expression ')'    { $result = new ASTNode("parenthesis"); }
-  ;
-
-mult returns [ASTNode result]
-  :   term (('*' | '/') term)*  { $result = new ASTNode("mult"); }
+term
+  :   ID
+  |   CONST
+  |   ID '(' arguments ')'
+  |   '(' expression ')'
   ;
   
-add returns [ASTNode result]
-  :   mult (('+' | '-') mult)*  { $result = new ASTNode("add"); }
+mult
+  :   term (('*' | '/') term)*
+  ;
+  
+add
+  :   mult (('+' | '-') mult)*
   ;
 
-relation returns [ASTNode result]
-  :   add (('==' | '!=' | '<' | '>') add)*  { $result = new ASTNode("relation"); }
+relation
+  :   add (('==' | '!=' | '<' | '>') add)*
   ;
 
-arguments returns [ASTNode result]
-  :   expression (',' expression)*  { $result = new ASTNode("arguments"); }
+arguments
+  :   expression (',' expression)*
   ;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f' )+ {$channel = HIDDEN;};
