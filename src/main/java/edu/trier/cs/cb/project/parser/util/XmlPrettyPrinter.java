@@ -1,4 +1,4 @@
-package edu.trier.cs.cb.project.parser.visitor;
+package edu.trier.cs.cb.project.parser.util;
 
 import java.io.OutputStream;
 

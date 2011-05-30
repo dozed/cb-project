@@ -12,8 +12,8 @@ import org.antlr.runtime.tree.Tree;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import edu.trier.cs.cb.project.parser.util.XmlPrettyPrinter;
 import edu.trier.cs.cb.project.parser.visitor.DomBuilderVisitor;
-import edu.trier.cs.cb.project.parser.visitor.XmlPrettyPrinter;
 
 public class ParserTest {
 
