@@ -1,5 +1,7 @@
 package edu.trier.cs.cb.project.parser;
 
+import edu.trier.cs.cb.project.parser.visitor.Visitor;
+
 public class Constant implements Term {
 
 	private Integer value;
@@ -13,12 +15,8 @@ public class Constant implements Term {
 		return value;
 	}
 	
-	public void dump() {
-		dump(0);
-	}
-	
-	public void dump(int level) {
-		for (int i=0; i < level; i++) System.out.print("-");
-		System.out.println("constant:"+value);
+	@Override
+	public void accept(Visitor v) {
+		v.visit(this);
 	}
 }

@@ -25,7 +25,7 @@ tokens {
 
 let
 	:		'let' definitions 'in' expressions
-  				-> ^(LET definitions expressions)							// rewrite rule
+  				-> ^(LET definitions expressions)							// rewrite rule, uses imaginary token
 	;
 
 definitions
@@ -54,7 +54,7 @@ expression
   ;
 
 assignment
-  :   ID '=' expression -> ^(ASSIGNMENT ID expression)	// uses imaginary token
+  :   ID '=' expression -> ^(ASSIGNMENT ID expression)
   ;
 
 relation

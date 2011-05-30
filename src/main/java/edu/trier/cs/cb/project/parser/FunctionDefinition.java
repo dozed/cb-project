@@ -2,10 +2,14 @@ package edu.trier.cs.cb.project.parser;
 
 import java.util.List;
 
+import edu.trier.cs.cb.project.parser.visitor.Visitor;
+
 public class FunctionDefinition implements IASTNode {
 
 	private String name;
+
 	private List<Identifier> variables;
+	
 	private List<Expression> expressions;
   
 	public FunctionDefinition(String name, List<Identifier> variables, List<Expression> expressions) {
@@ -27,20 +31,8 @@ public class FunctionDefinition implements IASTNode {
 	}
 
 	@Override
-	public void dump() {
-		dump(0);
-	}
-
-	@Override
-	public void dump(int level) {
-		for (int i=0; i < level; i++) System.out.print("-");
-		System.out.println("FUNCTION:"+name);
-		for (Identifier i : variables) {
-			i.dump(level+1);
-		}
-		for (Expression e : expressions) {
-			e.dump(level+1);
-		}
+	public void accept(Visitor v) {
+		v.visit(this);
 	}
 	
 }

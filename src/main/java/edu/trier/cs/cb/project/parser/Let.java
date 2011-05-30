@@ -2,13 +2,14 @@ package edu.trier.cs.cb.project.parser;
 
 import java.util.List;
 
-public class Let extends ASTNode implements IASTNode {
+import edu.trier.cs.cb.project.parser.visitor.Visitor;
+
+public class Let implements IASTNode {
 
 	private List<FunctionDefinition> definitions;
 	private List<Expression> expressions;
 
 	public Let(List<FunctionDefinition> definitions, List<Expression> expressions) {
-		super();
 		this.definitions = definitions;
 		this.expressions = expressions;
 	}
@@ -22,20 +23,20 @@ public class Let extends ASTNode implements IASTNode {
 	}
 
 	@Override
-	public void dump() {
-		dump(0);
+	public void accept(Visitor v) {
+		v.visit(this);
 	}
 
-	@Override
-	public void dump(int level) {
-		System.out.println("let");
-		System.out.println("function definitions:");
-		for (FunctionDefinition d : definitions) {
-			d.dump(level+1);
-		}
-		for (Expression e : expressions) {
-			e.dump(level+1);
-		}
-	}
-
+//	@Override
+//	public void dump(int level) {
+//		System.out.println("let");
+//		System.out.println("function definitions:");
+//		for (FunctionDefinition d : definitions) {
+//			d.dump(level+1);
+//		}
+//		for (Expression e : expressions) {
+//			e.dump(level+1);
+//		}
+//	}
+	
 }

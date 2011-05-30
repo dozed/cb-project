@@ -5,11 +5,11 @@ public abstract class BinaryNode<T> implements Expression {
 	private T left;
 	private T right;
 	
-	public void setLeft(T left) {
+	protected void setLeft(T left) {
 		this.left = left;
 	}
 
-	public void setRight(T right) {
+	protected void setRight(T right) {
 		this.right = right;
 	}
 

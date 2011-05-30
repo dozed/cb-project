@@ -10,9 +10,15 @@ import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 import org.antlr.runtime.tree.Tree;
 import org.junit.Test;
+import org.w3c.dom.Document;
+
+import edu.trier.cs.cb.project.parser.visitor.DomBuilderVisitor;
+import edu.trier.cs.cb.project.parser.visitor.XmlPrettyPrinter;
 
 public class ParserTest {
 
+	private DomBuilderVisitor visitor = new DomBuilderVisitor();
+	
 	@Test
 	public void testSimpleGrammar() throws RecognitionException {
 		testSimpleGrammarInternal("let f1(b) { if (b == 0) then 0 else f1(b-1) }\n" + 
@@ -38,17 +44,16 @@ public class ParserTest {
 		ltreeLexer lexer =  new ltreeLexer(charStream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ltreeParser parser = new ltreeParser(tokenStream);
-		
 		ltreeParser.let_return r = parser.let();
 		
 		CommonTree tree = (CommonTree)r.getTree();
-		System.out.println(tree.toStringTree());
-		
 	    CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
-	    
 	    ltree_walker walker = new ltree_walker(nodes);
 	    Let let = walker.let().l;
-	    let.dump();
+	    
+	    visitor.visit(let);
+	    Document doc = visitor.getDocument();
+	    XmlPrettyPrinter.serialize(doc, System.out);
 	}
 
 	@Test 
@@ -62,17 +67,16 @@ public class ParserTest {
 		ltreeLexer lexer =  new ltreeLexer(charStream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ltreeParser parser = new ltreeParser(tokenStream);
-		
 		ParserRuleReturnScope r = parser.definition();
 		
 		CommonTree tree = (CommonTree)r.getTree();
-		System.out.println(tree.toStringTree());
-		
 	    CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
-	    
 	    ltree_walker walker = new ltree_walker(nodes);
 	    FunctionDefinition def = walker.definition().result;
-	    def.dump();
+
+	    visitor.visit(def);
+	    Document doc = visitor.getDocument();
+	    XmlPrettyPrinter.serialize(doc, System.out);
 	}
 	
 	@Test 
@@ -86,17 +90,16 @@ public class ParserTest {
 		ltreeLexer lexer =  new ltreeLexer(charStream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ltreeParser parser = new ltreeParser(tokenStream);
-		
 		ParserRuleReturnScope r = parser.expression();
 		
 		CommonTree tree = (CommonTree)r.getTree();
-		System.out.println(tree.toStringTree());
-		
 	    CommonTreeNodeStream nodes = new CommonTreeNodeStream(tree);
-	    
 	    ltree_walker walker = new ltree_walker(nodes);
 	    Expression e = walker.expression().e;
-	    e.dump();
+	    
+	    visitor.visit(e);
+	    Document doc = visitor.getDocument();
+	    XmlPrettyPrinter.serialize(doc, System.out);
 	}
 	
 	public void dump(Tree t) {
