@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,17 +28,16 @@ public class DomBuilderVisitor implements Visitor {
 	
 	public DomBuilderVisitor() {
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder parser = factory.newDocumentBuilder();
-			doc = parser.newDocument();
+			createDocument();
 		} catch (Exception e) {
-			throw new RuntimeException("Could not build document builder.", e);
+			throw new RuntimeException("Could not create document builder.", e);
 		}
 	}
 
-	// TODO create root stack element
-	private void ensureValidDocument() {
-		
+	private void createDocument() throws ParserConfigurationException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder parser = factory.newDocumentBuilder();
+		doc = parser.newDocument();
 	}
 	
 	public Document getDocument() {
@@ -69,11 +69,21 @@ public class DomBuilderVisitor implements Visitor {
 		stack.pop();
 	}
 
+	private void append(Element e) {
+		if (stack.size() > 0) {
+			stack.peek().appendChild(e);
+		} else {
+			doc.appendChild(e);
+			stack.add(e);
+		}
+	}
+	
 	@Override
 	public void visit(FunctionDefinition functionDefinition) {
 		Element e = doc.createElement("function");
 		e.setAttribute("name", functionDefinition.getName());
-		stack.peek().appendChild(e);
+//		stack.peek().appendChild(e);
+		append(e);
 
 		// variables
 		Element vars = doc.createElement("variables");
@@ -98,7 +108,8 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(Relation relation) {
 		Element e = doc.createElement("relation");
 		e.setAttribute("type", relation.getType());
-		stack.peek().appendChild(e);
+//		stack.peek().appendChild(e);
+		append(e);
 		stack.push(e);
 		visit(relation.getLeft());
 		visit(relation.getRight());
@@ -109,7 +120,8 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(Operation operation) {
 		Element e = doc.createElement("operation");
 		e.setAttribute("type", operation.getType());
-		stack.peek().appendChild(e);
+//		stack.peek().appendChild(e);
+		append(e);
 		stack.push(e);
 		visit(operation.getLeft());
 		visit(operation.getRight());
@@ -120,21 +132,24 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(Constant constant) {
 		Element e = doc.createElement("constant");
 		e.setTextContent(constant.getValue().toString());
-		stack.peek().appendChild(e);
+//		stack.peek().appendChild(e);
+		append(e);
 	}
 
 	@Override
 	public void visit(Identifier identifier) {
 		Element e = doc.createElement("identifier");
 		e.setTextContent(identifier.getName().toString());
-		stack.peek().appendChild(e);
+//		stack.peek().appendChild(e);
+		append(e);
 	}
 
 	@Override
 	public void visit(FunctionCall functionCall) {
 		Element e = doc.createElement("call");
 		e.setAttribute("name", functionCall.getName());
-		stack.peek().appendChild(e);
+//		stack.peek().appendChild(e);
+		append(e);
 
 		// arguments
 		Element args = doc.createElement("arguments");
@@ -149,7 +164,8 @@ public class DomBuilderVisitor implements Visitor {
 	@Override
 	public void visit(IfExpression ifExpression) {
 		Element e = doc.createElement("if");
-		stack.peek().appendChild(e);
+//		stack.peek().appendChild(e);
+		append(e);
 
 		// if branch
 		Element ifBranch = doc.createElement("ifBranch");
@@ -173,8 +189,9 @@ public class DomBuilderVisitor implements Visitor {
 	@Override
 	public void visit(Assignment assignment) {
 		Element e = doc.createElement("assignment");
-		stack.peek().appendChild(e);
-		
+//		stack.peek().appendChild(e);
+		append(e);
+	
 		stack.push(e);
 		visit(assignment.getIdentifier());
 		visit(assignment.getExpression());
