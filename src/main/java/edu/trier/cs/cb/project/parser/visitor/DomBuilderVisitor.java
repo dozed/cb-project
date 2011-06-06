@@ -88,8 +88,8 @@ public class DomBuilderVisitor implements Visitor {
 		Element vars = doc.createElement("variables");
 		e.appendChild(vars);
 		stack.push(vars);
-		for (Identifier i : functionDefinition.getVariables()) {
-			visit(i);
+		for (Identifier id : functionDefinition.getVariables()) {
+			id.accept(this);
 		}
 		stack.pop();
 
@@ -98,7 +98,7 @@ public class DomBuilderVisitor implements Visitor {
 		e.appendChild(expressions);
 		stack.push(expressions);
 		for (Expression expr : functionDefinition.getExpressions()) {
-			visit(expr);
+			expr.accept(this);
 		}
 		stack.pop();
 	}
@@ -109,8 +109,8 @@ public class DomBuilderVisitor implements Visitor {
 		e.setAttribute("type", relation.getType());
 		append(e);
 		stack.push(e);
-		visit(relation.getLeft());
-		visit(relation.getRight());
+		relation.getLeft().accept(this);
+		relation.getRight().accept(this);
 		stack.pop();
 	}
 
@@ -120,8 +120,8 @@ public class DomBuilderVisitor implements Visitor {
 		e.setAttribute("type", operation.getType());
 		append(e);
 		stack.push(e);
-		visit(operation.getLeft());
-		visit(operation.getRight());
+		operation.getLeft().accept(this);
+		operation.getRight().accept(this);
 		stack.pop();
 	}
 
@@ -150,7 +150,7 @@ public class DomBuilderVisitor implements Visitor {
 		e.appendChild(args);
 		stack.push(args);
 		for (Expression expr : functionCall.getArguments()) {
-			visit(expr);
+			expr.accept(this);
 		}
 		stack.pop();
 	}
@@ -165,7 +165,7 @@ public class DomBuilderVisitor implements Visitor {
 		e.appendChild(ifBranch);
 		stack.push(ifBranch);
 		for (Expression expr : ifExpression.getIfBranch()) {
-			visit(expr);
+			expr.accept(this);
 		}
 		stack.pop();
 		
@@ -174,7 +174,7 @@ public class DomBuilderVisitor implements Visitor {
 		e.appendChild(elseBranch);
 		stack.push(elseBranch);
 		for (Expression expr : ifExpression.getElseBranch()) {
-			visit(expr);
+			expr.accept(this);
 		}
 		stack.pop();
 	}
@@ -185,31 +185,14 @@ public class DomBuilderVisitor implements Visitor {
 		append(e);
 	
 		stack.push(e);
-		visit(assignment.getIdentifier());
-		visit(assignment.getExpression());
+		assignment.getIdentifier().accept(this);
+		assignment.getExpression().accept(this);
 		stack.pop();
 	}
 
 	@Override
 	public void visit(Expression e) {
 		e.accept(this);
-		if (e instanceof Relation) {
-			visit((Relation) e);
-		} else if (e instanceof Operation) {
-			visit((Operation) e);
-		} else if (e instanceof Constant) {
-			visit((Constant) e);
-		} else if (e instanceof FunctionCall) {
-			visit((FunctionCall) e);
-		} else if (e instanceof Identifier) {
-			visit((Identifier) e);
-		} else if (e instanceof IfExpression) {
-			visit((IfExpression) e);
-		} else if (e instanceof Assignment) {
-			visit((Assignment) e);
-		} else {
-			throw new RuntimeException("Invalid type: " + e.getClass().getName());
-		}
 	}
 
 }
