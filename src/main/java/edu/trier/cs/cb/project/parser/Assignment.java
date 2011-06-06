@@ -22,7 +22,6 @@ public class Assignment implements Expression {
 	}
 
 	public void accept(Visitor v) {
-//		for (int i=0; i < level; i++) System.out.print("-");
 		v.visit(this);
 	}
 

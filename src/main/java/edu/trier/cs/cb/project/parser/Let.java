@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.trier.cs.cb.project.parser.visitor.Visitor;
 
-public class Let implements IASTNode {
+public class Let implements ASTNode {
 
 	private List<FunctionDefinition> definitions;
 	private List<Expression> expressions;
@@ -26,17 +26,5 @@ public class Let implements IASTNode {
 	public void accept(Visitor v) {
 		v.visit(this);
 	}
-
-//	@Override
-//	public void dump(int level) {
-//		System.out.println("let");
-//		System.out.println("function definitions:");
-//		for (FunctionDefinition d : definitions) {
-//			d.dump(level+1);
-//		}
-//		for (Expression e : expressions) {
-//			e.dump(level+1);
-//		}
-//	}
 	
 }

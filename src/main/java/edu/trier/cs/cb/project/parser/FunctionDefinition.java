@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.trier.cs.cb.project.parser.visitor.Visitor;
 
-public class FunctionDefinition implements IASTNode {
+public class FunctionDefinition implements ASTNode {
 
 	private String name;
 

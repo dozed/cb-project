@@ -26,7 +26,6 @@ public class XmlPrettyPrinter {
 		} catch (TransformerException e) {
 			// this is fatal, just dump the stack and throw a runtime exception
 			e.printStackTrace();
-
 			throw new RuntimeException(e);
 		}
 	}

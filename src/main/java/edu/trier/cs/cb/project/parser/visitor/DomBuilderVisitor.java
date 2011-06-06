@@ -82,7 +82,6 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(FunctionDefinition functionDefinition) {
 		Element e = doc.createElement("function");
 		e.setAttribute("name", functionDefinition.getName());
-//		stack.peek().appendChild(e);
 		append(e);
 
 		// variables
@@ -108,7 +107,6 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(Relation relation) {
 		Element e = doc.createElement("relation");
 		e.setAttribute("type", relation.getType());
-//		stack.peek().appendChild(e);
 		append(e);
 		stack.push(e);
 		visit(relation.getLeft());
@@ -120,7 +118,6 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(Operation operation) {
 		Element e = doc.createElement("operation");
 		e.setAttribute("type", operation.getType());
-//		stack.peek().appendChild(e);
 		append(e);
 		stack.push(e);
 		visit(operation.getLeft());
@@ -132,7 +129,6 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(Constant constant) {
 		Element e = doc.createElement("constant");
 		e.setTextContent(constant.getValue().toString());
-//		stack.peek().appendChild(e);
 		append(e);
 	}
 
@@ -140,7 +136,6 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(Identifier identifier) {
 		Element e = doc.createElement("identifier");
 		e.setTextContent(identifier.getName().toString());
-//		stack.peek().appendChild(e);
 		append(e);
 	}
 
@@ -148,7 +143,6 @@ public class DomBuilderVisitor implements Visitor {
 	public void visit(FunctionCall functionCall) {
 		Element e = doc.createElement("call");
 		e.setAttribute("name", functionCall.getName());
-//		stack.peek().appendChild(e);
 		append(e);
 
 		// arguments
@@ -164,7 +158,6 @@ public class DomBuilderVisitor implements Visitor {
 	@Override
 	public void visit(IfExpression ifExpression) {
 		Element e = doc.createElement("if");
-//		stack.peek().appendChild(e);
 		append(e);
 
 		// if branch
@@ -189,7 +182,6 @@ public class DomBuilderVisitor implements Visitor {
 	@Override
 	public void visit(Assignment assignment) {
 		Element e = doc.createElement("assignment");
-//		stack.peek().appendChild(e);
 		append(e);
 	
 		stack.push(e);
@@ -200,6 +192,7 @@ public class DomBuilderVisitor implements Visitor {
 
 	@Override
 	public void visit(Expression e) {
+		e.accept(this);
 		if (e instanceof Relation) {
 			visit((Relation) e);
 		} else if (e instanceof Operation) {

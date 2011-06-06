@@ -7,7 +7,6 @@ public class Constant implements Term {
 	private Integer value;
 
 	public Constant(Integer value) {
-		super();
 		this.value = value;
 	}
 
