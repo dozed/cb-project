@@ -1,12 +1,17 @@
 package edu.trier.cs.cb.project.machine;
 
+import edu.trier.cs.cb.project.compiler.Label;
+import edu.trier.cs.cb.project.compiler.Location;
+
 /* Instructions for TRIPLA 2011 */
 
 public class Instruction {
+	
 	private int opcode;
-	private Integer arg1 = null;
-	private Integer arg2 = null;
-	private Integer arg3 = null;
+	private Object arg1;
+	private Object arg2;
+	private Object arg3;
+	private Label label;
 
 	public final static int INVOKE = 1;
 	public final static int RETURN = 2;
@@ -27,42 +32,82 @@ public class Instruction {
 	public final static int IFNEQ = 17;
 	public final static int HALT = 100;
 
-	public Instruction(int op, int a1, int a2, int a3) {
-		this(op, a1, a2);
-		arg3 = a3;
-	}
-
-	public Instruction(int op, int a1, int a2) {
-		this(op, a1);
-		arg2 = a2;
-	}
-
-	public Instruction(int op, int a1) {
-		this(op);
-		arg1 = a1;
-	}
-
 	public Instruction(int op) {
 		opcode = op;
 		arg1 = null;
 		arg2 = null;
 		arg3 = null;
 	}
+	
+	public Instruction(int op, Integer a1) {
+		this(op, a1, null, null);
+	}
 
+	public Instruction(int op, Integer a1, Integer a2) {
+		this(op, a1, a2, null);
+	}
+
+	public Instruction(int op, Integer a1, Integer a2, Integer a3) {
+		opcode = op;
+		arg1 = a1;
+		arg2 = a2;
+		arg3 = a3;
+	}
+
+	public Instruction(int op, Location l1) {
+		opcode = op;
+		arg1 = l1;
+	}
+
+	public Instruction(int op, int l1, Location l2, int l3) {
+		opcode = op;
+		arg1 = l1;
+		arg2 = l2;
+		arg3 = l3;
+	}
+	
+	public Instruction(int op, Location l1, int l2) {
+		opcode = op;
+		arg1 = l1;
+		arg2 = l2;
+	}
+
+	private Integer getIntValue(Object o) {
+		if (o instanceof Integer) {
+			return (Integer)o;
+		} else if (o instanceof Location) {
+			return ((Location)o).address;
+		} else {
+			return null;
+		}
+	}
+	
 	public Integer getArg1() {
-		return arg1;
+		return getIntValue(arg1);
 	}
 
 	public Integer getArg2() {
-		return arg2;
+		return getIntValue(arg2);
 	}
 
 	public Integer getArg3() {
-		return arg3;
+		return getIntValue(arg3);
 	}
 
 	public int getOpcode() {
 		return opcode;
+	}
+	
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+	
+	public Label getLabel() {
+		return this.label;
+	}
+
+	public boolean hasLabel() {
+		return (this.label != null);
 	}
 
 	@Override
@@ -103,6 +148,12 @@ public class Instruction {
 		case Instruction.IFNZERO:
 			retStr += "IFNZERO";
 			break;
+		case Instruction.IFGT:
+			retStr += "IFGT";
+			break;
+		case Instruction.IFLT:
+			retStr += "IFLT";
+			break;
 		case Instruction.GOTO:
 			retStr += "GOTO";
 			break;
@@ -127,7 +178,7 @@ public class Instruction {
 				}
 			}
 		}
-
+		
 		return retStr;
 	}
 

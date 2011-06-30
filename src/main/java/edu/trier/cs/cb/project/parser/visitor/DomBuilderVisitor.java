@@ -88,7 +88,7 @@ public class DomBuilderVisitor implements Visitor {
 		Element vars = doc.createElement("variables");
 		e.appendChild(vars);
 		stack.push(vars);
-		for (Identifier id : functionDefinition.getVariables()) {
+		for (Identifier id : functionDefinition.getParameters()) {
 			id.accept(this);
 		}
 		stack.pop();
@@ -106,7 +106,7 @@ public class DomBuilderVisitor implements Visitor {
 	@Override
 	public void visit(Relation relation) {
 		Element e = doc.createElement("relation");
-		e.setAttribute("type", relation.getType());
+		e.setAttribute("type", relation.getType().name());
 		append(e);
 		stack.push(e);
 		relation.getLeft().accept(this);
@@ -117,7 +117,7 @@ public class DomBuilderVisitor implements Visitor {
 	@Override
 	public void visit(Operation operation) {
 		Element e = doc.createElement("operation");
-		e.setAttribute("type", operation.getType());
+		e.setAttribute("type", operation.getType().name());
 		append(e);
 		stack.push(e);
 		operation.getLeft().accept(this);

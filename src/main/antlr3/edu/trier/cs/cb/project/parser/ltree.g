@@ -49,6 +49,7 @@ expressions
 expression
   :   relation
   |   assignment
+  |		let									// should only be available in definitions
   |   'if' expression 'then' exprs1=expressions 'else' exprs2=expressions
   				-> ^(IF expression ^(IFBRANCH $exprs1) ^(ELSEBRANCH $exprs2))
   ;

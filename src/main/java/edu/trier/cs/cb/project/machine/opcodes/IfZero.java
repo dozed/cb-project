@@ -1,10 +1,17 @@
 package edu.trier.cs.cb.project.machine.opcodes;
 
+import edu.trier.cs.cb.project.compiler.Label;
 import edu.trier.cs.cb.project.machine.Instruction;
 
 
 public class IfZero extends AbstractOpcode implements Opcode {
 
+	private Label label;
+
+	public IfZero(Label label) {
+		this.label = label;
+	}
+	
 	IfZero() {}
 	
 	public void touch(Instruction i) {
